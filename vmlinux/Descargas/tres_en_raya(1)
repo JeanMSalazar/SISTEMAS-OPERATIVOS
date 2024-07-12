@@ -1,0 +1,164 @@
+#!/usr/bin/bash
+
+#variables
+t1="-"
+t2="-"
+t3="-"
+t4="-"
+t5="-"
+t6="-"
+t7="-"
+t8="-"
+t9="-"
+
+turno="x"
+game_over=0
+contador=0
+
+#funciones
+
+tablero()
+{
+    echo "$t1 $t2 $t3"
+    echo "$t4 $t5 $t6"
+    echo "$t7 $t8 $t9"
+}
+
+cambiar_turno()
+{
+    if [ "$turno" = "x" ]; then
+        turno="o"
+    else
+        turno="x"
+    fi
+}
+
+validar_movida()
+{
+if [ "$movida" -ge 1 -a "$movida" -le 9 ];then
+   if [ "$turno" = "x" ]; then
+        if [ "$movida" -eq 1 -a "$t1" = "-" ];then
+	t1="x"
+	cambiar_turno
+	elif [ "$movida" -eq 2 -a "$t2" = "-" ];then
+	t2="x"
+	cambiar_turno
+	elif [ "$movida" -eq 3 -a "$t3" = "-" ];then
+	t3="x"
+	cambiar_turno
+	elif [ "$movida" -eq 4 -a "$t4" = "-" ];then
+	t4="x"
+	cambiar_turno
+	elif [ "$movida" -eq 5 -a "$t5" = "-" ];then
+	t5="x"
+	cambiar_turno
+	elif [ "$movida" -eq 6 -a "$t6" = "-" ];then
+	t6="x"
+	cambiar_turno
+	elif [ "$movida" -eq 7 -a "$t7" = "-" ];then
+	t7="x"
+	cambiar_turno
+	elif [ "$movida" -eq 8 -a "$t8" = "-" ];then
+	t8="x"
+	cambiar_turno
+	elif [ "$movida" -eq 9 -a "$t9" = "-" ];then
+	t9="x"
+	cambiar_turno
+	fi
+   elif [ "$turno" = "o" ]; then
+        if [ "$movida" -eq 1 -a "$t1" = "-" ];then
+	t1="o"
+	cambiar_turno
+	elif [ "$movida" -eq 2 -a "$t2" = "-" ];then
+	t2="o"
+	cambiar_turno
+	elif [ "$movida" -eq 3 -a "$t3" = "-" ];then
+	t3="o"
+	cambiar_turno
+	elif [ "$movida" -eq 4 -a "$t4" = "-" ];then
+	t4="o"
+	cambiar_turno
+	elif [ "$movida" -eq 5 -a "$t5" = "-" ];then
+	t5="o"
+	cambiar_turno
+	elif [ "$movida" -eq 6 -a "$t6" = "-" ];then
+	t6="o"
+	cambiar_turno
+	elif [ "$movida" -eq 7 -a "$t7" = "-" ];then
+	t7="o"
+	cambiar_turno
+	elif [ "$movida" -eq 8 -a "$t8" = "-" ];then
+	t8="o"
+	cambiar_turno
+	elif [ "$movida" -eq 9 -a "$t9" = "-" ];then
+	t9="o"
+	cambiar_turno
+	fi
+    fi
+else
+ echo "Número de movida no válido"
+fi
+}
+
+ganar()
+{
+if [ "$t1" = "$t2" -a "$t2" = "$t3" -a "$t1" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t4" = "$t5" -a "$t5" = "$t6" -a "$t4" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t7" = "$t8" -a "$t8" = "$t9" -a "$t7" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t1" = "$t4" -a "$t4" = "$t7" -a "$t1" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t2" = "$t5" -a "$t5" = "$t8" -a "$t2" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t3" = "$t6" -a "$t6" = "$t9" -a "$t3" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t1" = "$t5" -a "$t5" = "$t9" -a "$t1" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+elif [ "$t3" = "$t5" -a "$t5" = "$t7" -a "$t3" != "-" ]; then
+	cambiar_turno
+	echo "Ganó el juego la figura ($turno)"
+	game_over=1
+	tablero
+fi
+}
+
+while [ $game_over -eq 0 ]
+do
+    #detectar empate
+    if [ $contador -eq 9 ];then
+    echo "empate"
+    break
+    fi
+
+    clear
+    tablero
+    read -p "Digite un número [1-9] Turno ($turno): " movida
+    validar_movida
+    clear
+    ganar
+    ((contador++))
+
+done
